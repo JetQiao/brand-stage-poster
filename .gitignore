@@ -1,0 +1,23 @@
+# 本地任务素材、验证产物与打包文件不进入公开仓库。
+/output/
+/private/
+/.local/
+/dist/
+/DESIGN.md
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+.DS_Store
+Thumbs.db
+
+# 宿主本机配置不属于可分发 Skill。
+/.codex/
+/.agents/
