@@ -213,7 +213,8 @@ def main(argv: list[str] | None = None) -> int:
         )
     except (OSError, ValueError, Image.DecompressionBombError) as error:
         parser.exit(1, f"导出失败：{error}\n")
-    print(json.dumps(report, ensure_ascii=False, indent=2))
+    # 控制台使用 ASCII 转义，避免 Windows 管道遇到中文文件名时编码失败。
+    print(json.dumps(report, ensure_ascii=True, indent=2))
     return 0
 
 

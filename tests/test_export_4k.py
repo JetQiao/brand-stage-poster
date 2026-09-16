@@ -185,6 +185,21 @@ class ExportTests(unittest.TestCase):
         with Image.open(self.output / report["outputs"][0]["file"]) as result_image:
             self.assertEqual(list(result_image.size), report["outputs"][0]["size"])
 
+    def test_cli_supports_chinese_filenames_in_non_utf8_console(self):
+        self.write_image()
+        chinese_source = self.root / "品牌海报.png"
+        self.source.rename(chinese_source)
+        result = subprocess.run(
+            [sys.executable, str(SCRIPT), "--input", str(chinese_source),
+             "--output-dir", str(self.output), "--long-edge", "80"],
+            env={**os.environ, "PYTHONIOENCODING": "cp1252"},
+            capture_output=True, text=True, encoding="ascii", check=True,
+        )
+        report = json.loads(result.stdout)
+        self.assertEqual(report["input_file"], "品牌海报.png")
+        saved = json.loads((self.output / "poster_export.json").read_text(encoding="utf-8"))
+        self.assertEqual(report, saved)
+
     def test_cli_invalid_arguments_and_invalid_input_fail_without_outputs(self):
         self.source.write_text("not an image", encoding="utf-8")
         base = [sys.executable, str(SCRIPT), "--input", str(self.source), "--output-dir", str(self.output)]
