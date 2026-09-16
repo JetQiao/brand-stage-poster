@@ -1,4 +1,4 @@
 interface:
   display_name: "品牌舞台海报"
-  short_description: "一句话创建白字红光舞台海报，可选暗红立体字，支持自由度与局部锁定"
+  short_description: "填参数上传图片即可制作舞台海报，支持身材比例、四角文案与自由度"
   default_prompt: "使用 $brand-stage-poster 创建一张主字为 NOVA LAB 的白字红光品牌舞台海报，无人物，约 2.22:1 宽幅，自由度 50。"
