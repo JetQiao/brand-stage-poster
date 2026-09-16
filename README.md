@@ -5,11 +5,11 @@
 
 **一句话创建品牌舞台海报，让风格保持一致，让创意自由可控。**
 
-巨型窄体字、克制的舞台空间、单一强调色与反射地面。适合品牌发布、团队亮相、活动主视觉，也支持修改已有海报和单独导出尺寸。
+默认采用白色发光巨字、强红色背光、超宽正面舞台与清晰红白镜面反射。适合品牌发布、团队亮相、活动主视觉，也支持修改已有海报和单独导出尺寸。
 
-![红黑极简品牌舞台风格示例](assets/preview.png)
+![默认白字红光品牌舞台](assets/preview.png)
 
-*AI 生成的无人物风格示例，文字为通用占位文案。不是品牌官方物料；[查看示例提示词](examples/preview-prompt.md)。*
+*AI 生成的无人物默认风格示例，文字为通用占位文案。不是品牌官方物料；[查看示例提示词](examples/preview-prompt.md)。有原始 Logo 时可加入高置的中央标志，没有 Logo 时保留留白。*
 
 这是遵循 `SKILL.md` 格式的开源 Skill，负责组织素材、提示词、修改范围和质量检查。**实际出图需要宿主提供图像生成／编辑能力**。没有生图工具时可输出提示词；安装 Skill 不会新增模型、服务额度或 API 密钥。
 
@@ -32,12 +32,26 @@ git clone https://github.com/JetQiao/brand-stage-poster.git ~/.agents/skills/bra
 
 ```text
 $brand-stage-poster
-做一张品牌舞台海报，左侧 NOVA，右侧 LAB，红黑配色，不要人物。
+做一张品牌舞台海报，左侧 NOVA，右侧 LAB，白字红光，不要人物。
 ```
 
-默认一张、横版 16:9、平衡自由度。需要真实团队时上传原始照片；需要现有品牌标志时上传 Logo。没有图形 Logo 可以只做文字品牌版。
+默认一张、约 2.22:1 超宽横版、平衡自由度、白字红光。用户给定的画幅优先；编辑旧图且未要求改画幅时保留原比例。需要真实团队时上传原始照片；需要现有品牌标志时上传 Logo。没有图形 Logo 可以只做文字品牌版。
 
 也可放到项目的 `.agents/skills/brand-stage-poster/`。避免同时安装多份同名 Skill；若没有出现，重启宿主。安装位置与调用说明参考 [OpenAI 官方 Skill 文档](https://learn.chatgpt.com/docs/build-skills)。其他支持 Agent Skills 的宿主可读取本包，具体生图工具和安装方式以宿主为准，尚未逐一验证。
+
+## 两种背景风格
+
+| 风格 | 视觉特征 | 示例 |
+| --- | --- | --- |
+| **白字红光，默认** `white-red` | 乳白发光字面、红背光与边缘光、正面满幅巨字、分层灯带、强红白镜面反射 | [图片](assets/preview.png) · [提示词](examples/preview-prompt.md) |
+| 暗红立体字 `dark-red` | 暗红实体字、明显立体侧面、深黑空间、克制反射 | [图片](assets/preview-dark-red.png) · [提示词](examples/preview-dark-red-prompt.md) |
+
+直接说“用暗红立体字风格”即可切换。风格预设与自由度独立：严格、平衡、探索都可以配合任意预设。明确的文字、人物、配色及其他锁定优先于预设；切换风格不会自动解除锁定。边角文案只在用户提供时添加。
+
+```text
+$brand-stage-poster
+用暗红立体字风格，主字 NOVA LAB，16:9，不要人物，自由度 50。
+```
 
 ## 自由度与锁定
 
@@ -69,7 +83,7 @@ $brand-stage-poster
 ```text
 $brand-stage-poster
 沿用这张海报，自由度 80，给两个构图方向。
-锁定人物、Logo、文字和红黑配色，只放开空间、灯光与材质。
+锁定人物、Logo、文字和白字红光配色，只放开空间、灯光与材质。
 ```
 
 ### 只改一处
@@ -117,8 +131,9 @@ SKILL.md                       代理执行入口
 agents/openai.yaml             名称与默认调用示例
 references/                    风格控制、制作流程、提示词与验收
 scripts/export_4k.py            独立尺寸导出
-assets/preview.png             无人物公开示例
-examples/preview-prompt.md      示例的提示词与来源说明
+assets/preview.png             白字红光默认示例
+assets/preview-dark-red.png     暗红立体字可选示例
+examples/                      两种示例的提示词与来源说明
 tests/                         导出与包结构测试
 ```
 
